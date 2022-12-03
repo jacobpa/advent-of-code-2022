@@ -2,7 +2,6 @@ package day1
 
 import (
 	"bufio"
-	"log"
 	"os"
 	"sort"
 	"strconv"
@@ -23,7 +22,6 @@ func countElfCalories(input *os.File) []int {
 		line := scanner.Text()
 		cal, err := strconv.Atoi(line)
 		if err != nil {
-			log.Printf("Encountered non-number token, creating new elf")
 			elves = append(elves, sum)
 			sum = 0
 		}
