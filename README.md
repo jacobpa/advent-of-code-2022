@@ -11,5 +11,5 @@ go build .
 ```
 USAGE: aoc2022 day input
         day     day of challenge (1-25)
-        input   path to input file     
+        input   path to input file
 ```
