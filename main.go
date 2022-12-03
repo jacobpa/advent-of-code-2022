@@ -1,7 +1,7 @@
 package main
 
 import (
-	"adventofcode2022/day2"
+	"adventofcode2022/day3"
 	"fmt"
 	"log"
 	"os"
@@ -17,7 +17,6 @@ func main() {
 		log.Fatalf("Could not open file at %v\n", os.Args[1])
 	}
 	defer file.Close()
-	// partOne, partTwo := day1.Answer(file)
-	partOne, partTwo := day2.Answer(file)
+	partOne, partTwo := day3.Answer(file)
 	fmt.Printf("The answers are:\nPart One: %v\nPart Two: %v\n", partOne, partTwo)
 }
