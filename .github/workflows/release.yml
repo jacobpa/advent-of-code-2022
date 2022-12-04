@@ -1,0 +1,43 @@
+name: Create Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
+      - name: Collect build information
+        id: build_info
+        run: |
+          echo "date=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
+          echo "short_sha=$(git rev-parse --short "${{ github.sha }}")" >> $GITHUB_OUTPUT
+      - name: Create build directory
+        run: |
+          mkdir -p build
+          make clean
+      - name: Build Linux
+        run: |
+          make release_linux
+          tar -cJvf build/aoc2022-linux-x86_64.tar.xz -C build/linux aoc2022
+      - name: Build Windows
+        run: |
+          make release_windows
+          zip -j build/aoc2022-windows-x86_64.zip build/windows/aoc2022.exe
+      - name: Build macOS
+        run: |
+          make release_darwin
+          tar -cJvf build/aoc2022-darwin-arm64.tar.xz -C build/darwin aoc2022
+      - name: Create Release
+        uses: ncipollo/release-action@v1.11.2
+        with:
+          allowUpdates: true
+          artifact: build/*.tar.xz, build/*.zip
+          tag: ${{ steps.build_info.outputs.date }}-${{ steps.build_info.outputs.short-sha }}
+          commit: ${{ github.sha }}
