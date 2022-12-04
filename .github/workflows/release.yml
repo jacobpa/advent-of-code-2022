@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - main.go
 
 jobs:
   release:
@@ -38,6 +40,6 @@ jobs:
         uses: ncipollo/release-action@v1.11.2
         with:
           allowUpdates: true
-          artifact: build/*.tar.xz, build/*.zip
+          artifacts: build/*.tar.xz, build/*.zip
           tag: ${{ steps.build_info.outputs.date }}-${{ steps.build_info.outputs.short-sha }}
           commit: ${{ github.sha }}
