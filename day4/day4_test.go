@@ -1,6 +1,9 @@
 package day4
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
 func Test_encapsulates(t *testing.T) {
 	type args struct {
@@ -195,7 +198,46 @@ func Test_overlaps(t *testing.T) {
 }
 
 func Test_encapsulatesWithInvalidInput(t *testing.T) {
-	defer func() {recover()}()
+	defer func() { recover() }()
 	encapsulates("1-2,3")
 	t.Errorf("Input should have paniced")
+}
+
+func Test_overlapsWithInvalidInput(t *testing.T) {
+	defer func() { recover() }()
+	overlaps("1-2,3")
+	t.Errorf("Input should have paniced")
+}
+
+func Test_rangesToIntSlice(t *testing.T) {
+	type args struct {
+		input string
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{
+			name: "All one digit",
+			args: args{
+				input: "1-2,3-4",
+			},
+			want: []int{1, 2, 3, 4},
+		},
+		{
+			name: "Multiple digits",
+			args: args{
+				input: "12-345,6789-101112",
+			},
+			want: []int{12, 345, 6789, 101112},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := rangesToIntSlice(tt.args.input); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("rangesToIntSlice() = %v, want %v", got, tt.want)
+			}
+		})
+	}
 }

@@ -3,15 +3,15 @@ package day4
 import (
 	"bufio"
 	"os"
-	"regexp"
 	"strconv"
+	"strings"
 )
 
 var (
-	numberExpression = regexp.MustCompile("\\d+")
+	builder = strings.Builder{}
 )
 
-func Answer(input *os.File) (int,int) {
+func Answer(input *os.File) (int, int) {
 	scanner := bufio.NewScanner(input)
 
 	countEncapsulates := 0
@@ -56,14 +56,24 @@ func overlaps(ranges string) bool {
 }
 
 func rangesToIntSlice(input string) []int {
-	strings := numberExpression.FindAllString(input, 4)
-	if len(strings) != 4 {
-		panic("Unexpected input for parsing range")
+	numbers := make([]int, 0, 4)
+
+	for i := 0; true; i++ {
+		if input[i] > 47 && input[i] < 58 {
+			builder.WriteByte(input[i])
+		} else {
+			converted, _ := strconv.Atoi(builder.String())
+			numbers = append(numbers, converted)
+			builder.Reset()
+		}
 	}
 
-	numbers := make([]int, 4)
-	for i, number := range strings {
-		numbers[i], _ = strconv.Atoi(number)
+	converted, _ := strconv.Atoi(builder.String())
+	numbers = append(numbers, converted)
+	builder.Reset()
+
+	if len(numbers) != 4 {
+		panic("Unexpected input for parsing range")
 	}
 
 	return numbers
