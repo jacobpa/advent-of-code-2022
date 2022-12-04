@@ -1,3 +1,4 @@
 *.exe
 dist/
 build/
+.idea/
