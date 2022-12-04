@@ -10,7 +10,7 @@ endif
 
 all: $(BUILD_DIRECTORY)/$(NAME)
 
-$(BUILD_DIRECTORY)/$(NAME): main.go
+$(BUILD_DIRECTORY)/$(NAME): main.go day*/*.go
 	$(BUILD) -o $@
 
 release_all: clean release_windows release_darwin release_linux
