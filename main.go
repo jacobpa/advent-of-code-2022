@@ -4,6 +4,7 @@ import (
 	"aoc2022/day1"
 	"aoc2022/day2"
 	"aoc2022/day3"
+	"aoc2022/day4"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -22,6 +23,7 @@ var funcMapping = map[string]func(*os.File) (int, int){
 	"1": day1.Answer,
 	"2": day2.Answer,
 	"3": day3.Answer,
+	"4": day4.Answer,
 }
 
 func usage(name string) string {
