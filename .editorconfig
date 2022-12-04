@@ -8,8 +8,8 @@ trim_trailing_whitespace = true
 [input.txt]
 insert_final_newline = false
 
-[*.go]
+[{Makefile,*.go}]
 indent_style = tab
 
-[*.md]
+[{*.md,*.yml}]
 tab_width = 2
